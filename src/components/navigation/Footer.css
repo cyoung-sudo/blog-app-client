@@ -1,0 +1,22 @@
+#footer {
+  padding: 2rem 1rem;
+  background-color: var(--theme-color);
+}
+
+#footer-links {
+  text-align: center;
+  list-style: none;
+}
+
+#footer-links > li {
+  margin-bottom: 0.3rem;
+}
+
+#footer-links > li > a {
+  color: white;
+  text-decoration: none;
+}
+
+#footer-links > li > a:hover {
+  text-decoration: underline;
+}
