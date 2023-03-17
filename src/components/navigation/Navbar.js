@@ -36,6 +36,16 @@ export default function Navbar({ authUser }) {
       </div>
       
       <ul id="navbar-links">
+        <li>
+          <NavLink
+            to="users"
+            end
+            className={({ isActive }) =>
+              isActive ? "navbar-link-active" : undefined}>
+            Users
+          </NavLink>
+        </li>
+
         {!authUser &&
           <li>
             <NavLink
@@ -54,6 +64,18 @@ export default function Navbar({ authUser }) {
               className={({ isActive }) =>
                 isActive ? "navbar-link-active" : undefined}>
               Login
+            </NavLink>
+          </li>
+        }
+
+        {authUser &&
+          <li>
+            <NavLink
+              to={ `users/${authUser._id}` }
+              end
+              className={({ isActive }) =>
+                isActive ? "navbar-link-active" : undefined}>
+              Profile
             </NavLink>
           </li>
         }
