@@ -4,6 +4,7 @@ import Login from "../features/auth/Login";
 import Signup from "../features/auth/Signup";
 import Users from "../features/users/Users";
 import Profile from "../features/users/Profile";
+import Settings from "../features/settings/Settings";
 // Components
 import Homepage from "../components/static/Homepage";
 import NotFound from "../components/static/NotFound";
@@ -38,6 +39,10 @@ const routesConfig = [
             element: <Profile/>
           }
         ]
+      },
+      {
+        path: "/settings",
+        element: <Settings/>
       }
     ]
   }

@@ -33,3 +33,13 @@ export const getUser = async id => {
 
   return res;
 };
+
+//----- Delete given user
+export const deleteUser = async id => {
+  const res = await api.request({
+    method: "DELETE",
+    url: `/user/${id}`
+  });
+
+  return res;
+};

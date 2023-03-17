@@ -3,7 +3,7 @@ import "./Navbar.css";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 // Redux
 import { useDispatch } from "react-redux";
-import { setAuthUser, refresh } from "../../AppSlice";
+import { setAuthUser } from "../../AppSlice";
 // APIs
 import * as authAPI from "../../apis/authAPI";
 
@@ -12,7 +12,7 @@ export default function Navbar({ authUser }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // Logout user
+  //----- Logout user
   const handleLogout = () => {
     authAPI.logout()
     .then(res => {
@@ -76,6 +76,18 @@ export default function Navbar({ authUser }) {
               className={({ isActive }) =>
                 isActive ? "navbar-link-active" : undefined}>
               Profile
+            </NavLink>
+          </li>
+        }
+
+        {authUser &&
+          <li>
+            <NavLink
+              to="settings"
+              end
+              className={({ isActive }) =>
+                isActive ? "navbar-link-active" : undefined}>
+              Settings
             </NavLink>
           </li>
         }
