@@ -3,6 +3,9 @@ import "./Login.css";
 import { useState } from "react";
 // Routing
 import { useNavigate } from "react-router-dom";
+// Redux
+import { useDispatch } from "react-redux";
+import { setAuthUser } from "../../AppSlice";
 // APIs
 import * as authAPI from "../../apis/authAPI";
 // Components
@@ -14,6 +17,7 @@ export default function Login(props) {
   const [password, setPassword] = useState("");
   // Hooks
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   
   //----- Submit form data
   const handleSubmit = e => {
@@ -23,11 +27,13 @@ export default function Login(props) {
     authAPI.login(username, password)
     .then(res => {
       if(res.data.success) {
-        console.log("success");
-        // Redirect to homepage
+        console.log("Logged in");
+        dispatch(setAuthUser(res.data.user));
+
+        // Redirect to home page
         navigate("/");
       } else {
-        console.log("fail");
+        console.log("Login fail");
       }
     })
     .catch(err => console.log(err));

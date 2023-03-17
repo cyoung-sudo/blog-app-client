@@ -13,3 +13,23 @@ export const login = async (username, password) => {
 
   return res;
 };
+
+//----- Logout user
+export const logout = async () => {
+  const res = await api.request({
+    method: "POST",
+    url: "/auth/logout"
+  });
+
+  return res;
+};
+
+//----- Retrieve authenticated user
+export const getAuthUser = async () => {
+  const res = await api.request({
+    method: "GET",
+    url: "/auth/user"
+  });
+
+  return res;
+};
