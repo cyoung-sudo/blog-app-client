@@ -33,3 +33,13 @@ export const getForUser = async userId => {
 
   return res;
 };
+
+//----- Delete all posts for given user
+export const deleteForUser = async userId => {
+  const res = await api.request({
+    method: "DELETE",
+    url: `/post/user/${userId}`
+  });
+
+  return res;
+};

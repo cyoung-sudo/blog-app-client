@@ -7,6 +7,7 @@ import { setAuthUser } from "../../AppSlice";
 // APIs
 import * as authAPI from "../../apis/authAPI";
 import * as userAPI from "../../apis/userAPI";
+import * as postAPI from "../../apis/postAPI";
 
 export default function Settings() {
   // Hooks
@@ -23,10 +24,20 @@ export default function Settings() {
         if(result) {
           let authUser = res.data.user;
 
-          // Delete given user
-          userAPI.deleteUser(authUser._id)
+          // Delete user-posts for given user
+          postAPI.deleteForUser(authUser._id)
           .then(res2 => {
             if(res2.data.success) {
+              // Delete given user
+              return userAPI.deleteUser(authUser._id)
+            } else {
+              return { messages: res2.data.message };
+            }
+          })
+          .then(res2 => {
+            if(res2.message) {
+              return { message: res2.message };
+            } else if(res2.data.success) {
               // Logout user
               return authAPI.logout();
             } else {
@@ -49,6 +60,7 @@ export default function Settings() {
           .catch(err => console.log(err));
         }
       } else {
+        //--- Expired session
         console.log("Session expired");
         dispatch(setAuthUser(null));
 
