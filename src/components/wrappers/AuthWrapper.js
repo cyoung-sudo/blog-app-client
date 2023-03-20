@@ -2,7 +2,8 @@
 import { useEffect, useState } from "react";
 // Redux
 import { useDispatch } from "react-redux";
-import { setAuthUser } from "../../AppSlice";
+import { setAuthUser } from "../../appSlice";
+import { setPopup } from "../../components/popup/slices/popupSlice";
 // Routing
 import { useNavigate } from "react-router-dom";
 // APIs
@@ -22,9 +23,11 @@ export default function AuthWrapper({ children }) {
       if(res.data.success) {
         setAccess(true);
       } else {
-        console.log("Authentication required");
-
         dispatch(setAuthUser(null));
+        dispatch(setPopup({
+          message: res.data.message,
+          type: "error"
+        }));
   
         // Redirect to home page
         navigate("/");

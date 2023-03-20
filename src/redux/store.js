@@ -1,8 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import AppReducer from "../AppSlice";
+// Reducers
+import appReducer from "../appSlice";
+import popupReducer from "../components/popup/slices/popupSlice";
 
 export default configureStore({
   reducer: {
-    App: AppReducer
+    app: appReducer,
+    popup: popupReducer
   }
 });

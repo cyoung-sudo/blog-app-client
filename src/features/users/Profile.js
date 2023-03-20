@@ -5,7 +5,8 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 // Redux
 import { useSelector, useDispatch } from "react-redux";
-import { setAuthUser, refresh } from "../../AppSlice";
+import { setAuthUser, refresh } from "../../appSlice";
+import { setPopup } from "../../components/popup/slices/popupSlice";
 // APIs
 import * as authAPI from "../../apis/authAPI";
 import * as userAPI from "../../apis/userAPI";
@@ -21,7 +22,7 @@ export default function Profile() {
   const [user, setUser] = useState(null);
   const [userPosts, setUserPosts] = useState(null);
   // Redux state
-  const { authUser, refreshToggle }  = useSelector((state) => state.App);
+  const { authUser, refreshToggle }  = useSelector((state) => state.app);
   // Hooks
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -36,8 +37,6 @@ export default function Profile() {
     .then(res => {
       if(res.data.success) {
         setUser(res.data.user);
-      } else {
-        console.log("Failed to retrieve user");
       }
     })
     .catch(err => console.log(err));
@@ -52,8 +51,6 @@ export default function Profile() {
     .then(res => {
       if(res.data.success) {
         setUserPosts(res.data.posts);
-      } else {
-        console.log("Failed to retrieve posts for user");
       }
     })
     .catch(err => console.log(err));
@@ -71,18 +68,21 @@ export default function Profile() {
       postAPI.create(id, postText)
       .then(res2 => {
         if(res2.data.success) {
-          console.log("Post created");
           dispatch(refresh());
-        } else {
-          console.log("Failed to create post");
+          dispatch(setPopup({
+            message: "Post created",
+            type: "success"
+          }));
         }
       })
       .catch(err => console.log(err));
       } else {
         //--- Expired session
-        console.log("Session expired");
-
         dispatch(setAuthUser(null));
+        dispatch(setPopup({
+          message: res.data.message,
+          type: "error"
+        }));
 
         // Redirect to home page
         navigate("/");
@@ -101,17 +101,21 @@ export default function Profile() {
         postAPI.deletePost(postId)
         .then(res2 => {
           if(res2.data.success) {
-            console.log("Post deleted");
-
             dispatch(refresh());
+            dispatch(setPopup({
+              message: "Post deleted",
+              type: "success"
+            }));
           }
         })
         .catch(err => console.log(err));
       } else {
-        //--- Expired session
-        console.log("Session expired");
-        
+        //--- Expired session        
         dispatch(setAuthUser(null));
+        dispatch(setPopup({
+          message: res.data.message,
+          type: "error"
+        }));
 
         // Redirect to home page
         navigate("/");

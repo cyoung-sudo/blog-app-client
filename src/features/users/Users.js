@@ -19,8 +19,6 @@ export default function Users() {
         // Order from newest -> oldest
         let reversedUsers = res.data.users.reverse();
         setUsers(reversedUsers);
-      } else {
-        console.log("Failed to retrieve all users");
       }
     })
     .catch(err => console.log(err));

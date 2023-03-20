@@ -3,7 +3,8 @@ import "./Settings.css";
 import { useNavigate } from "react-router-dom";
 // Redux
 import { useDispatch } from "react-redux";
-import { setAuthUser } from "../../AppSlice";
+import { setAuthUser } from "../../appSlice";
+import { setPopup } from "../../components/popup/slices/popupSlice";
 // APIs
 import * as authAPI from "../../apis/authAPI";
 import * as userAPI from "../../apis/userAPI";
@@ -46,23 +47,30 @@ export default function Settings() {
           })
           .then(res2 => {
             if(res2.message) {
-              console.log(res2.message);
+              dispatch(setPopup({
+                message: res2.message,
+                type: "error"
+              }));
             } else if(res2.data.success) {
-              console.log("Logged out");
               dispatch(setAuthUser(null));
+              dispatch(setPopup({
+                message: "Account deleted",
+                type: "success"
+              }));
 
               // Redirect to home page
               navigate("/");
-            } else {
-              console.log("Failed to logout");
             }
           })
           .catch(err => console.log(err));
         }
       } else {
         //--- Expired session
-        console.log("Session expired");
         dispatch(setAuthUser(null));
+        dispatch(setPopup({
+          message: res.data.message,
+          type: "error"
+        }));
 
         // Redirect to home page
         navigate("/");

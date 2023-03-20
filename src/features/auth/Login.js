@@ -5,7 +5,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 // Redux
 import { useDispatch } from "react-redux";
-import { setAuthUser } from "../../AppSlice";
+import { setAuthUser } from "../../appSlice";
+import { setPopup } from "../../components/popup/slices/popupSlice";
 // APIs
 import * as authAPI from "../../apis/authAPI";
 // Components
@@ -27,13 +28,19 @@ export default function Login(props) {
     authAPI.login(username, password)
     .then(res => {
       if(res.data.success) {
-        console.log("Logged in");
         dispatch(setAuthUser(res.data.user));
+        dispatch(setPopup({
+          message: "Logged in",
+          type: "success"
+        }));
 
         // Redirect to home page
         navigate("/");
       } else {
-        console.log("Login fail");
+        dispatch(setPopup({
+          message: res.data.message,
+          type: "error"
+        }));
       }
     })
     .catch(err => console.log(err));

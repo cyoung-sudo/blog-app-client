@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export const AppSlice = createSlice({
-  name: "App",
+export const appSlice = createSlice({
+  name: "app",
   initialState: {
     authUser: null,
     refresh: false
@@ -19,6 +19,6 @@ export const AppSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { setAuthUser, refresh } = AppSlice.actions
+export const { setAuthUser, refresh } = appSlice.actions
 
-export default AppSlice.reducer
+export default appSlice.reducer

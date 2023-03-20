@@ -1,0 +1,7 @@
+.popup-success {
+  background-color: var(--light-success-color);
+}
+
+.popup-error {
+  background-color: var(--light-error-color);
+}

@@ -3,6 +3,9 @@ import "./Signup.css";
 import { useState } from "react";
 // Routing
 import { useNavigate } from "react-router-dom";
+// Redux
+import { useDispatch } from "react-redux";
+import { setPopup } from "../../components/popup/slices/popupSlice";
 // APIs
 import * as userAPI from "../../apis/userAPI";
 // Components
@@ -14,6 +17,7 @@ export default function Signup(props) {
   const [password, setPassword] = useState("");
   // Hooks
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   
   //----- Submit form data
   const handleSubmit = e => {
@@ -23,11 +27,18 @@ export default function Signup(props) {
     userAPI.create(username, password)
     .then(res => {
       if(res.data.success) {
-        console.log("success");
+        dispatch(setPopup({
+          message: "Account created",
+          type: "success"
+        }));
+
         // Redirect to login page
         navigate("/login");
       } else {
-        console.log("fail");
+        dispatch(setPopup({
+          message: res.data.message,
+          type: "error"
+        }));
       }
     })
     .catch(err => console.log(err));

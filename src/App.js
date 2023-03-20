@@ -5,16 +5,18 @@ import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 // Redux
 import { useSelector, useDispatch } from "react-redux";
-import { setAuthUser } from "./AppSlice";
+import { setAuthUser } from "./appSlice";
 // APIs
 import * as authAPI from "./apis/authAPI";
 // Components
 import Navbar from "./components/navigation/Navbar";
 import Footer from "./components/navigation/Footer";
+import Popup from "./components/popup/Popup";
 
 function App() {
   // Redux state
-  const { authUser }  = useSelector((state) => state.App);
+  const { authUser }  = useSelector((state) => state.app);
+  const { message, type } = useSelector((state) => state.popup);
   // Hooks
   const dispatch = useDispatch();
 
@@ -35,6 +37,10 @@ function App() {
     <div id="app">
       <Navbar authUser={ authUser }/>
       <div id="app-content">
+        <Popup
+          message={ message }
+          type={ type }
+          delay={ 3000 }/>
         <Outlet/>
       </div>
       <Footer/>
