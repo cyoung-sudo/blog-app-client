@@ -13,3 +13,13 @@ export const create = async (userId, text) => {
 
   return res;
 };
+
+//----- Retrieve all posts for given user
+export const getForUser = async userId => {
+  const res = await api.request({
+    method: "GET",
+    url: `/post/${userId}`
+  });
+
+  return res;
+};
