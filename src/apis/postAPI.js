@@ -14,11 +14,21 @@ export const create = async (userId, text) => {
   return res;
 };
 
+//----- Delete given post
+export const deletePost = async id => {
+  const res = await api.request({
+    method: "DELETE",
+    url: `/post/${id}`
+  });
+
+  return res;
+};
+
 //----- Retrieve all posts for given user
 export const getForUser = async userId => {
   const res = await api.request({
     method: "GET",
-    url: `/post/${userId}`
+    url: `/post/user/${userId}`
   });
 
   return res;

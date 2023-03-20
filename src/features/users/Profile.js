@@ -2,11 +2,12 @@ import "./Users.css";
 // React
 import { useState, useEffect } from "react";
 // Routing
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 // Redux
 import { useSelector, useDispatch } from "react-redux";
-import { refresh } from "../../AppSlice";
+import { setAuthUser, refresh } from "../../AppSlice";
 // APIs
+import * as authAPI from "../../apis/authAPI";
 import * as userAPI from "../../apis/userAPI";
 import * as postAPI from "../../apis/postAPI";
 // Components
@@ -24,9 +25,12 @@ export default function Profile() {
   // Hooks
   const { id } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   //----- Retrieve given user on load
   useEffect(() => {
+    setUser(null);
+
     // Retrieve given user
     userAPI.getUser(id)
     .then(res => {
@@ -37,10 +41,12 @@ export default function Profile() {
       }
     })
     .catch(err => console.log(err));
-  }, []);
+  }, [id]);
 
   //----- Retrieve posts for given user on load
   useEffect(() => {
+    setUserPosts(null);
+
     // Retrieve posts for given user
     postAPI.getForUser(id)
     .then(res => {
@@ -51,7 +57,7 @@ export default function Profile() {
       }
     })
     .catch(err => console.log(err));
-  }, [refreshToggle]);
+  }, [id, refreshToggle]);
 
   //----- Submit post-form data
   const handleSubmit = e => {
@@ -70,6 +76,33 @@ export default function Profile() {
     .catch(err => console.log(err));
   };
 
+  //----- Delete given post
+  const handleDelete = postId => {
+    // Check session status
+    authAPI.getAuthUser()
+    .then(res => {
+      if(res.data.success) {
+        // Delete image
+        postAPI.deletePost(postId)
+        .then(res2 => {
+          if(res2.data.success) {
+            console.log("Post deleted");
+
+            dispatch(refresh());
+          }
+        })
+        .catch(err => console.log(err));
+      } else {
+        //--- Expired session
+        dispatch(setAuthUser(null));
+
+        // Redirect to home page
+        navigate("/");
+      }
+    })
+    .catch(err => console.log(err));
+  }
+
   if(user && userPosts) {
     return (
       <div id="profile">
@@ -86,7 +119,9 @@ export default function Profile() {
         }
 
         <div id="profile-userPosts-wrapper">
-          <UserPostsDisplay posts={ userPosts }/>
+          <UserPostsDisplay 
+            posts={ userPosts }
+            handleDelete={ handleDelete }/>
         </div>
       </div>
     );
