@@ -63,14 +63,29 @@ export default function Profile() {
   const handleSubmit = e => {
     e.preventDefault();
 
-    // Create post
-    postAPI.create(id, postText)
+    // Check session status
+    authAPI.getAuthUser()
     .then(res => {
       if(res.data.success) {
-        console.log("Post created");
-        dispatch(refresh());
+        // Create post
+      postAPI.create(id, postText)
+      .then(res2 => {
+        if(res2.data.success) {
+          console.log("Post created");
+          dispatch(refresh());
+        } else {
+          console.log("Failed to create post");
+        }
+      })
+      .catch(err => console.log(err));
       } else {
-        console.log("Failed to create post");
+        //--- Expired session
+        console.log("Session expired");
+
+        dispatch(setAuthUser(null));
+
+        // Redirect to home page
+        navigate("/");
       }
     })
     .catch(err => console.log(err));
@@ -94,6 +109,8 @@ export default function Profile() {
         .catch(err => console.log(err));
       } else {
         //--- Expired session
+        console.log("Session expired");
+        
         dispatch(setAuthUser(null));
 
         // Redirect to home page

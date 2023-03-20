@@ -8,6 +8,7 @@ import Settings from "../features/settings/Settings";
 // Components
 import Homepage from "../components/static/Homepage";
 import NotFound from "../components/static/NotFound";
+import AuthWrapper from "../components/wrappers/AuthWrapper";
 
 const routesConfig = [
   {
@@ -42,7 +43,11 @@ const routesConfig = [
       },
       {
         path: "/settings",
-        element: <Settings/>
+        element: (
+          <AuthWrapper>
+            <Settings/>
+          </AuthWrapper>
+        )
       }
     ]
   }
