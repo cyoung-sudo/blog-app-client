@@ -1,4 +1,4 @@
-import "./Users.css";
+import "./Profile.css";
 // React
 import { useState, useEffect } from "react";
 // Routing
@@ -142,7 +142,10 @@ export default function Profile() {
         <div id="profile-userPosts-wrapper">
           <UserPostsDisplay 
             posts={ userPosts }
-            handleDelete={ handleDelete }/>
+            handleDelete={ handleDelete }
+            ownership={
+              (authUser && (id === authUser._id)) ? true : false
+            }/>
         </div>
       </div>
     );

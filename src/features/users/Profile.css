@@ -1,0 +1,38 @@
+#profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem 0 2rem 0;
+}
+
+#profile-header {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+#profile-postForm-wrapper {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+#profile-userPosts-wrapper {
+  width: 100%;
+}
+
+/* ----- Breakpoints ----- */
+/* Medium screen devices (768px and above) */
+@media only screen and (min-width: 768px) {
+  #profile-postForm-wrapper,
+  #profile-userPosts-wrapper {
+    width: 70%;
+  }
+}
+ 
+/* Extra big screen devices (1200px and above) */
+@media only screen and (min-width: 1200px) {
+  #profile-postForm-wrapper,
+  #profile-userPosts-wrapper {
+    width: 50%;
+  }
+}
+/* ----- /Breakpoints ----- */

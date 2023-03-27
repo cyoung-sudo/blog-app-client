@@ -1,8 +1,8 @@
-import "./Form.css";
+import "./AuthForm.css";
 
-export default function Form({ setUsername, setPassword, handleSubmit }) {
+export default function AuthForm({ setUsername, setPassword, handleSubmit }) {
   return (
-    <form className="authForm" onSubmit={ handleSubmit }>
+    <form id="authForm" onSubmit={ handleSubmit }>
       <div className="authForm-group">
         <label>Username</label>
         <input 

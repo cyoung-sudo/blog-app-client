@@ -9,7 +9,7 @@ import { setPopup } from "../../components/popup/slices/popupSlice";
 // APIs
 import * as userAPI from "../../apis/userAPI";
 // Components
-import Form from "../../components/auth/Form";
+import AuthForm from "../../components/forms/AuthForm";
 
 export default function Signup(props) {
   // Controlled inputs
@@ -51,7 +51,7 @@ export default function Signup(props) {
       </div>
 
       <div id="signup-form-wrapper">
-        <Form
+        <AuthForm
           setUsername={ setUsername }
           setPassword={ setPassword }
           handleSubmit={ handleSubmit }/>

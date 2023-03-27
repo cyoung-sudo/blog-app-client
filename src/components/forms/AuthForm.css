@@ -1,0 +1,34 @@
+#authForm {
+  padding: 1rem;
+  background-color: var(--light-color);
+  text-align: center;
+}
+
+.authForm-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.authForm-group > label {
+  margin-bottom: 0.3rem;
+}
+
+.authForm-group > input {
+  padding: 0.3rem 0.5rem;
+  font-size: var(--default-font);
+}
+
+.authForm-submit > input {
+  padding: 0.3rem 0.5rem;
+  background-color: var(--theme-color2);
+  color: white;
+  font-size: var(--default-font);
+  font-weight: bold;
+  border: none;
+  border-radius: 0.5rem;
+}
+
+.authForm-submit > input:hover {
+  cursor: pointer;
+}

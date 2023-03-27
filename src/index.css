@@ -3,7 +3,10 @@
 :root {
   /* Colors */
   --theme-color: steelblue;
+  --theme-color2: darkorange;
   --lighter-color: hsla(0, 0%, 90%, 0.5);
+  --light-color: hsla(0, 0%, 90%, 0.8);
+  --light-dark-color: hsla(0, 0%, 30%, 0.8);
   --light-success-color: hsla(120, 90%, 90%, 0.5);
   --light-error-color: hsla(0, 90%, 90%, 0.5);
   /* Font Sizes */

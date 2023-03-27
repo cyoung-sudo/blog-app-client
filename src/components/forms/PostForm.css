@@ -1,0 +1,24 @@
+#postForm {
+  display: flex;
+  background-color: green;
+}
+
+.postForm-field {
+  width: 100%;
+}
+
+.postForm-field > input {
+  width: 100%;
+  padding: 0.3rem 0.5rem;
+  font-size: var(--default-font);
+}
+
+.postForm-submit > input {
+  height: 100%;
+  padding: 0.3rem 0.5rem;
+  font-size: var(--default-font);
+}
+
+.postForm-submit > input:hover {
+  cursor: pointer;
+}
