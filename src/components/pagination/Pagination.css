@@ -1,0 +1,36 @@
+.pagination {
+  display: flex;
+  justify-content: center;
+}
+
+.pagination > button {
+  padding: 0.3rem 0.5rem;
+  background-color: var(--theme-color2);
+  color: white;
+  border: none;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+/* First child */
+.pagination > button:first-child {
+  border-top-left-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
+}
+
+/* Last child */
+.pagination > button:last-child {
+  border-top-right-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+}
+
+.pagination > button:hover {
+  cursor: pointer;
+}
+
+.pagination > div {
+  padding: 0.3rem 0.5rem;
+  border: 1px solid gray;
+  font-size: 0.9rem;
+  font-weight: 300;
+}

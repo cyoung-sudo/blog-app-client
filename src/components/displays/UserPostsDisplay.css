@@ -1,3 +1,7 @@
+#userPostsDisplay-pagination-wrapper {
+  margin-bottom: 1rem;
+}
+
 #userPostsDisplay-list {
   list-style: none;
 }

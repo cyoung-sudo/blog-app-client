@@ -50,7 +50,9 @@ export default function Profile() {
     postAPI.getForUser(id)
     .then(res => {
       if(res.data.success) {
-        setUserPosts(res.data.posts);
+        // Order from newest -> oldest
+        let reversedPosts = res.data.posts.reverse();
+        setUserPosts(reversedPosts);
       }
     })
     .catch(err => console.log(err));
