@@ -8,7 +8,7 @@ export default function UserPostsDisplay({ posts, handleDelete, ownership }) {
           {posts.map((post, idx) => (
             <li key={ idx }>
               <div className="userPostsDisplay-text">{ post.text }</div>
-              <div className="userPostsDisplay-date">Joined: { new Date(post.createdAt).toDateString() }</div>
+              <div className="userPostsDisplay-date">Posted: { new Date(post.createdAt).toDateString() }</div>
               <div className="userPostsDisplay-options">
                 {ownership && <button onClick={() => handleDelete(post._id)}>Delete</button>}
               </div>
