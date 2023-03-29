@@ -23,25 +23,44 @@ export default function Signup(props) {
   const handleSubmit = e => {
     e.preventDefault();
 
-    // Create user
-    userAPI.create(username, password)
-    .then(res => {
-      if(res.data.success) {
-        dispatch(setPopup({
-          message: "Account created",
-          type: "success"
-        }));
+    // Validations
+    if((username === "") || (password === "")) {
+      dispatch(setPopup({
+        message: "Missing input field",
+        type: "error"
+      }));
+    // Check limitations
+    } else if(username.length > 30) {
+      dispatch(setPopup({
+        message: "Usernames are limited to 30 characters",
+        type: "error"
+      }));
+    } else if(password.length > 30) {
+      dispatch(setPopup({
+        message: "Passwords are limited to 30 characters",
+        type: "error"
+      }));
+    } else {
+      // Create user
+      userAPI.create(username, password)
+      .then(res => {
+        if(res.data.success) {
+          dispatch(setPopup({
+            message: "Account created",
+            type: "success"
+          }));
 
-        // Redirect to login page
-        navigate("/login");
-      } else {
-        dispatch(setPopup({
-          message: res.data.message,
-          type: "error"
-        }));
-      }
-    })
-    .catch(err => console.log(err));
+          // Redirect to login page
+          navigate("/login");
+        } else {
+          dispatch(setPopup({
+            message: res.data.message,
+            type: "error"
+          }));
+        }
+      })
+      .catch(err => console.log(err));
+    }
   };
 
   return (

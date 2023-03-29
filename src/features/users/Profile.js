@@ -62,35 +62,53 @@ export default function Profile() {
   const handleSubmit = e => {
     e.preventDefault();
 
-    // Check session status
-    authAPI.getAuthUser()
-    .then(res => {
-      if(res.data.success) {
-        // Create post
-      postAPI.create(id, postText)
-      .then(res2 => {
-        if(res2.data.success) {
-          dispatch(refresh());
+    // Validations
+    if(postText === "") {
+      dispatch(setPopup({
+        message: "Missing input field",
+        type: "error"
+      }));
+    // Check limitations
+    } else if(postText.length > 300) {
+      dispatch(setPopup({
+        message: "Posts are limited to 300 characters",
+        type: "error"
+      }));
+
+      setPostText("");
+    } else {
+      // Check session status
+      authAPI.getAuthUser()
+      .then(res => {
+        if(res.data.success) {
+          // Create post
+        postAPI.create(id, postText)
+        .then(res2 => {
+          if(res2.data.success) {
+            dispatch(refresh());
+            dispatch(setPopup({
+              message: "Post created",
+              type: "success"
+            }));
+
+            setPostText("");
+          }
+        })
+        .catch(err => console.log(err));
+        } else {
+          //--- Expired session
+          dispatch(setAuthUser(null));
           dispatch(setPopup({
-            message: "Post created",
-            type: "success"
+            message: res.data.message,
+            type: "error"
           }));
+
+          // Redirect to home page
+          navigate("/");
         }
       })
       .catch(err => console.log(err));
-      } else {
-        //--- Expired session
-        dispatch(setAuthUser(null));
-        dispatch(setPopup({
-          message: res.data.message,
-          type: "error"
-        }));
-
-        // Redirect to home page
-        navigate("/");
-      }
-    })
-    .catch(err => console.log(err));
+    }
   };
 
   //----- Delete given post

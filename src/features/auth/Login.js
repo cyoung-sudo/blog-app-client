@@ -24,26 +24,45 @@ export default function Login(props) {
   const handleSubmit = e => {
     e.preventDefault();
     
-    // Login user
-    authAPI.login(username, password)
-    .then(res => {
-      if(res.data.success) {
-        dispatch(setAuthUser(res.data.user));
-        dispatch(setPopup({
-          message: "Logged in",
-          type: "success"
-        }));
+    // Validations
+    if((username === "") || (password === "")) {
+      dispatch(setPopup({
+        message: "Missing input field",
+        type: "error"
+      }));
+    // Check limitations
+    } else if(username.length > 30) {
+      dispatch(setPopup({
+        message: "Usernames are limited to 30 characters",
+        type: "error"
+      }));
+    } else if(password.length > 30) {
+      dispatch(setPopup({
+        message: "Passwords are limited to 30 characters",
+        type: "error"
+      }));
+    } else {
+      // Login user
+      authAPI.login(username, password)
+      .then(res => {
+        if(res.data.success) {
+          dispatch(setAuthUser(res.data.user));
+          dispatch(setPopup({
+            message: "Logged in",
+            type: "success"
+          }));
 
-        // Redirect to home page
-        navigate("/");
-      } else {
-        dispatch(setPopup({
-          message: res.data.message,
-          type: "error"
-        }));
-      }
-    })
-    .catch(err => console.log(err));
+          // Redirect to home page
+          navigate("/");
+        } else {
+          dispatch(setPopup({
+            message: res.data.message,
+            type: "error"
+          }));
+        }
+      })
+      .catch(err => console.log(err));
+    }
   };
 
   return (
